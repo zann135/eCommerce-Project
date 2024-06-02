@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PetaniController;
+use App\Http\Controllers\TengkulakController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +19,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('login', [AuthController::class,'index'])->name('login');
+Route::get('register', [AuthController::class,'register'])->name('register');
+Route::post('proses_login', [AuthController::class,'proses_login'])->name('proses_login');
+Route::get('logout', [AuthController::class,'logout'])->name('logout');
+
+Route::post('proses_register',[AuthController::class,'proses_register'])->name('proses_register');
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['login_check:admin']], function () {
+        Route::resource('1', PetaniController::class);
+    });
+    Route::group(['middleware' => ['login_check:user']], function () {
+        Route::resource('2', TengkulakController::class);
+    });
+    Route::group(['middleware' => ['login_check:user']], function () {
+        Route::resource('3', CustomerController::class);
+    });
 });
