@@ -29,13 +29,10 @@ Route::post('proses_register',[AuthController::class,'proses_register'])->name('
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['login_check:admin']], function () {
-        Route::resource('1', PetaniController::class);
+    Route::group(['middleware' => ['login_check:user']], function () {
+        Route::resource('1', TengkulakController::class);
     });
     Route::group(['middleware' => ['login_check:user']], function () {
-        Route::resource('2', TengkulakController::class);
-    });
-    Route::group(['middleware' => ['login_check:user']], function () {
-        Route::resource('3', CustomerController::class);
+        Route::resource('2', CustomerController::class);
     });
 });

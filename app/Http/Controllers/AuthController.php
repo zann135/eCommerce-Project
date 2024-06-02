@@ -13,12 +13,9 @@ class AuthController extends Controller
         $user = Auth::user();
         if($user){
             if($user->level =='1'){
-                return redirect()->intended('petani');
-            }
-            else if($user->level =='2'){
                 return redirect()->intended('tengkulak');
             }
-            else if($user->level =='3'){
+            else if($user->level =='2'){
                 return redirect()->intended('customer');
             }
 
@@ -44,12 +41,9 @@ class AuthController extends Controller
             $user =  Auth::user();
             // cek lagi jika level user admin maka arahkan ke halaman admin
             if($user->level =='1'){
-                return redirect()->intended('petani');
-            }
-            else if($user->level =='2'){
                 return redirect()->intended('tengkulak');
             }
-            else if($user->level =='3'){
+            else if($user->level =='2'){
                 return redirect()->intended('customer');
             }
              // jika belum ada role maka ke halaman /
@@ -81,7 +75,9 @@ class AuthController extends Controller
             'name'=>'required',
             'username'=>'required|unique:users',
             'email'=>'required|email',
-            'password'=>'required'
+            'password'=>'required',
+            'phone'=>'required',
+            'address'=>'required'
         ]);
         
 // kalau gagal kembali ke halaman register dengan munculkan pesan error
