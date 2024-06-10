@@ -20,13 +20,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('login', [AuthController::class,'index'])->name('login');
-Route::get('register', [AuthController::class,'register'])->name('register');
-Route::post('proses_login', [AuthController::class,'proses_login'])->name('proses_login');
-Route::get('logout', [AuthController::class,'logout'])->name('logout');
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('login_form', [AuthController::class, 'login_form'])->name('login_form');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::post('proses_register',[AuthController::class,'proses_register'])->name('proses_register');
+Route::post('proses_register', [AuthController::class, 'proses_register'])->name('proses_register');
 
+// start test route
+Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+Route::get('lelang', [AuthController::class, 'lelang'])->name('lelang');
+Route::get('history', [AuthController::class, 'history'])->name('history');
+
+Route::get('join_lelang', [AuthController::class, 'join_lelang'])->name('join_lelang');
+
+// end test route
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['login_check:user']], function () {
