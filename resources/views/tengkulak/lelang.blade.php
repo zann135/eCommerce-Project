@@ -21,8 +21,8 @@
                   <tr>
                     <th class="text-center" width="10%">No</th>
                     <th width="30%">Nama Lelang</th> 
-                    <th class="text-center" width="15%">Tanggal Mulai</th>
-                    <th class="text-center" width="15%">Tanggal Selesai</th>
+                    <th class="text-center" width="15%">Waktu Mulai</th>
+                    <th class="text-center" width="15%">Waktu Selesai</th>
                     <th class="text-center" width="15%">Status</th>
                     <th class="text-center" width="15%">Aksi</th>
                   </tr>
@@ -30,35 +30,17 @@
                 <tbody>
                   @foreach ($list_lelang_tersedia->data as $item)
                     @php
-<<<<<<< Updated upstream
-                      $now = \Carbon\Carbon::now();
-                      $tanggal_mulai = \Carbon\Carbon::parse($item->tanggal_mulai);
-                      $tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai);
-
-                      if ($tanggal_mulai < $now AND $tanggal_selesai > $now) {
-=======
                       if ($item->status_lelang == 0) {
                         $status = '<label class="badge badge-danger">Belum Dimulai</label>';
                       } else if ($item->status_lelang == 1) {
->>>>>>> Stashed changes
                         $status = '<label class="badge badge-warning">Sedang Berlangsung</label>';
                       } else if ($item->status_lelang == 2) {
                         $status = '<label class="badge badge-danger">Belum Bayar</label>';
                       } else {
-<<<<<<< Updated upstream
-                        if ($tanggal_mulai > $now) {
-                          $status = '<label class="badge badge-danger">Belum Dimulai</label>';
-                          $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Join</a></div>';
-                          $iteration1 += 1;
-                        } else {
-                          continue;
-                        }
-=======
                         $status = '<label class="badge badge-success">Sudah Bayar</label>';
->>>>>>> Stashed changes
                       }
 
-                      $button = '<a href="'.route('edit_lelang', $item->id_lelang).'" class="btn btn-warning btn-rounded btn-sm me-2"><i class="mdi mdi-pencil"></i></a>
+                      $button = '<a href="/list_lelang_tengkulak/'. $item->id_lelang .'/edit" class="btn btn-warning btn-rounded btn-sm me-2"><i class="mdi mdi-pencil"></i></a>
                       <a href="'.route('delete_lelang', $item->id_lelang).'"><button type="button" class="btn btn-danger btn-rounded btn-sm" data-bs-toggle="modal" data-bs-target="#deleteLelang"><i class="mdi mdi-delete"></i></button></a>';
                     @endphp
                   <tr>
@@ -102,29 +84,18 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="tanggal_mulai" class="col-sm-4 col-form-label">Tanggal Mulai Lelang</label>
-              <div class="col-sm-8">
-                <input type="datetime-local" class="form-control" id="tanggal_mulai" placeholder="Tanggal Mulai Lelang">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="tanggal_berakhir" class="col-sm-4 col-form-label">Tanggal Selesai Lelang</label>
-              <div class="col-sm-8">
-                <input type="datetime-local" class="form-control" id="tanggal_berakhir" placeholder="Tanggal Selesai Lelang">
-              </div>
-            </div>
-            <div class="form-group row">
-<<<<<<< Updated upstream
               <label for="tanggal_mulai" class="col-sm-4 col-form-label">Waktu Mulai Lelang</label>
               <div class="col-sm-8">
-                <input type="time" class="form-control" id="tanggal_mulai" placeholder="Waktu Mulai Lelang">
+                <input type="datetime-local" class="form-control" id="tanggal_mulai" placeholder="Waktu Mulai Lelang">
               </div>
             </div>
             <div class="form-group row">
-              <label for="tanggal_selesai" class="col-sm-4 col-form-label">Waktu Selesai Lelang</label>
+              <label for="tanggal_berakhir" class="col-sm-4 col-form-label">Waktu Selesai Lelang</label>
               <div class="col-sm-8">
-                <input type="time" class="form-control" id="tanggal_selesai" placeholder="Waktu Selesai Lelang">
-=======
+                <input type="datetime-local" class="form-control" id="tanggal_berakhir" placeholder="Waktu Selesai Lelang">
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="tanggal_berakhir" class="col-sm-4 col-form-label">Open Bid</label>
               <div class="col-sm-8">
                 <div class="input-group">
@@ -150,7 +121,6 @@
                     <span class="input-group-text">,00</span>
                   </div>
                 </div>
->>>>>>> Stashed changes
               </div>
             </div>
           </div>
@@ -189,6 +159,6 @@
 
 @push('scripts')
     <script>
-      $('table[data-form]="lelangTable"').on('click', )
+      // $('table[data-form]="lelangTable"').on('click', )
     </script>
 @endpush
