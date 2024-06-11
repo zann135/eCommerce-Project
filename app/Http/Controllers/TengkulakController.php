@@ -3,45 +3,136 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TengkulakController extends Controller
 {
-    // dashboard
-    public function index()
+    public function dashboard()
     {
-        return view(
-            'dashboard',
-            [
-                'title' => 'Dashboard',
-                'active' => 'dashboard'
-            ]
-        );
+        try {
+            $user = Auth::user();
+            if ($user->level != '1') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        var_dump($this->history_lelang()->getData());
+        return view('dashboard', [
+            'title' => 'Dashboard',
+            'is_active' => 'dashboard',
+            'pembelian' => $this->penjualan(),
+            'belum_bayar' => $this->belum_dibayar(),
+            'menang_lelang' => $this->lelang_berhasil(),
+            'kalah_lelang' => $this->jumlah_customer(),
+            'history_lelang' => $this->history_lelang()->getData(),
+            'history_menang_lelang' => $this->history_pemenang_lelang()->getData(),
+        ]);
     }
-
-    // create lelang cabai
-    public function createLelang()
+    public function penjualan()
     {
-        return view('create_lelang');
+        $id_tengkulak = Auth::user()->id;
+        $totalPenjualan = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 3)
+        ->sum('harga_akhir');
+
+        return (int) $totalPenjualan;
+            return 120000;
     }
-
-    // view lelang cabai
-    public function lelangBerjalan()
+    public function belum_dibayar()
     {
-        return view('view_lelang', [
-            'title' => 'Lelang Berjalan',
-            'active' => 'lelang_berjalan'
+        $id_tengkulak = Auth::user()->id;
+        $totalBelumDibayar = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 2)
+        ->sum('harga_akhir');
+
+        return (int) $totalBelumDibayar;
+    }
+    public function lelang_berhasil()
+    {
+        $id_tengkulak = Auth::user()->id;
+        $totalLelangBerhasil = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 3)
+        ->count();
+
+        return (int) $totalLelangBerhasil;
+    }
+    public function jumlah_customer()
+    {
+        $id_tengkulak = Auth::user()->id;
+        $totalCustomer = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 2)
+        ->count();
+
+        return (int) $totalCustomer;
+    }
+    public function history_lelang()
+    {
+        $id_tengkulak = Auth::user()->id;
+        $historyLelang = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->get();
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $historyLelang,
+        ]);
+    }
+    public function history_pemenang_lelang()
+    {
+        $id_tengkulak = Auth::user()->id;
+        $historyPemenangLelang = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 3)
+        ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $historyPemenangLelang,
         ]);
     }
 
-    // view payment status lelang cabai
-    public function paymentStatus()
-    {
-        return view('payment_status');
-    }
 
-    // view history status lelang cabai
-    public function historyStatus()
+    public function list_lelang()
     {
-        return view('history_status_lelang');
+        try {
+            $user = Auth::user();
+            if ($user->level != '1') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        return view('lelang', [
+            'title' => 'List Lelang',
+            'is_active' => 'list_lelang',
+            'list_lelang_tersedia' => $this->get_list_lelang()->getData(),
+        ]);
+    }
+    # get list lelang berdasarkan id_tengkulak dan status lelang belum dimulai dan dimulai, urutkan dari status lelang dimulai lalu waktu lelang yang terdekat
+    public function get_list_lelang()
+    {
+        $id_tengkulak = Auth::user()->id;
+        $listLelang = DB::table('lelang')
+        ->where('id_tengkulak', $id_tengkulak)
+        ->where('status_lelang', 0)
+        ->orWhere('status_lelang', 1)
+        ->orderBy('status_lelang', 'asc')
+        ->orderBy('tanggal_mulai', 'asc')
+        ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $listLelang,
+        ]);
     }
 }

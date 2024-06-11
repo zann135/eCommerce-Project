@@ -12,6 +12,7 @@ class Pembayaran extends Model
         'id_pembayaran',
         'id_lelang',
         'id_tengkulak',
+        'id_customer',
         'bukti_pembayaran',
         'status_pembayaran',
     ];

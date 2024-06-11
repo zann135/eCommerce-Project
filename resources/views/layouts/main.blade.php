@@ -35,10 +35,10 @@
             </button>
           </div>
           <div>
-            <a class="navbar-brand brand-logo" href="{{ route('dashboard') }}">
+            <a class="navbar-brand brand-logo" href="{{ route('dashboard_tengkulak') }}">
               <img src="{{ asset('images/logo-cabein.svg') }}" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="{{ route('dashboard') }}">
+            <a class="navbar-brand brand-logo-mini" href="{{ route('dashboard_tengkulak') }}">
               <img src="{{ asset('images/icon-cabein.svg') }}" alt="logo" />
             </a>
           </div>
@@ -75,7 +75,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('dashboard') }}">
+              <a class="nav-link" href="{{ route('dashboard_tengkulak') }}">
                 <i class="menu-icon mdi mdi-grid-large"></i>
                 <span class="menu-title">Dashboard</span>
               </a>

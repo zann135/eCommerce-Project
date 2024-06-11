@@ -45,9 +45,10 @@ class AuthController extends Controller
         if (Auth::attempt($credential)) {
             // kalau berhasil simpan data user ya di variabel $user
             $user =  Auth::user();
+            $request->session()->regenerate();
             // cek lagi jika level user admin maka arahkan ke halaman admin
             if ($user->level == '1') {
-                return redirect()->intended('tengkulak');
+                return redirect()->intended('dashboard_tengkulak');
             } else if ($user->level == '2') {
                 return redirect()->intended('customer');
             }
@@ -57,7 +58,7 @@ class AuthController extends Controller
 
         // jika ga ada data user yang valid maka kembalikan lagi ke halaman login
         // pastikan kirim pesan error juga kalau login gagal
-        return redirect('login.index')
+        return redirect('login_form')
             ->withInput()
             ->withErrors(['login_gagal' => 'These credentials does not match our records']);
     }
@@ -103,13 +104,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // logout itu harus menghapus session nya 
-
-        $request->session()->flush();
-
-        // jalan kan juga fungsi logout pada auth 
-
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         // kembali kan ke halaman login
         return Redirect('login');
     }

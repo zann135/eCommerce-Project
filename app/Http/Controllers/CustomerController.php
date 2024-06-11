@@ -21,7 +21,7 @@ class CustomerController extends Controller
         ]);
     }
     public function pembelian()
-    {
+    {   
         return 120000;
     }
 

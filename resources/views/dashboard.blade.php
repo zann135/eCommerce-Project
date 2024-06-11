@@ -52,7 +52,6 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nama Cabai</th>
                       <th>Harga Awal</th>
                       <th>Harga Akhir</th>
                       <th>Status</th>
@@ -63,15 +62,14 @@
                     @foreach ($history_lelang->data as $item)
                     <tr>
                       <td>{{ $item->id_lelang }}</td>
-                      <td>{{ $item->nama_cabai }}</td>
-                      <td class="harga">Rp{{ $item->harga_awal }}</td>
+                      <td class="harga">Rp{{ $item->open_bid }}</td>
                       <td class="harga">Rp{{ $item->harga_akhir }}</td>
-                      @if ($item->status == 'Menang')
-                      <td><label class="badge badge-success">{{ $item->status }}</label></td>
+                      @if ($item->status_lelang == 'Menang')
+                      <td><label class="badge badge-success">{{ $item->status_lelang }}</label></td>
                       @else
-                      <td><label class="badge badge-danger">{{ $item->status }}</label></td>
+                      <td><label class="badge badge-danger">{{ $item->status_lelang }}</label></td>
                       @endif
-                      <td>{{ $item->tanggal }}</td>
+                      <td>{{ $item->tanggal_mulai }}</td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -105,12 +103,12 @@
                       <td>{{ $item->nama_cabai }}</td>
                       <td class="harga">Rp{{ $item->harga_awal }}</td>
                       <td class="harga">Rp{{ $item->harga_akhir }}</td>
-                      @if ($item->status == 'Menang')
-                      <td><label class="badge badge-success">{{ $item->status }}</label></td>
+                      @if ($item->status_lelang == 'Menang')
+                      <td><label class="badge badge-success">{{ $item->status_lelang }}</label></td>
                       @else
-                      <td><label class="badge badge-danger">{{ $item->status }}</label></td>
+                      <td><label class="badge badge-danger">{{ $item->status_lelang }}</label></td>
                       @endif
-                      <td>{{ $item->tanggal }}</td>
+                      <td>{{ $item->tanggal_mulai }}</td>
                     </tr>
                     @endforeach
                   </tbody>
