@@ -1,6 +1,7 @@
 @php
     $name = Auth::user()->name;
     $email = Auth::user()->email;
+    $role = Auth::user()->level;
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -76,6 +77,30 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
+        @if ($role == 1)
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('dashboard_tengkulak') }}">
+                <i class="menu-icon mdi mdi-grid-large"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('list_lelang_tengkulak') }}">
+                <i class="menu-icon mdi mdi-gavel"></i>
+                <span class="menu-title">Lelang</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('history_lelang_tengkulak') }}">
+                <i class="menu-icon mdi mdi-history"></i>
+                <span class="menu-title">History Lelang</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        @elseif ($role == 2)
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
@@ -98,6 +123,7 @@
             </li>
           </ul>
         </nav>
+        @endif
         <!-- partial -->
         @yield('content')
         
@@ -134,6 +160,7 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="{{ asset('js/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
