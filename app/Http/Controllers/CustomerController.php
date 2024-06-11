@@ -222,4 +222,35 @@ class CustomerController extends Controller
             ->where('id_lelang', $id_lelang)
             ->first();
     }
+
+
+    public function join_lelang($request)
+    {
+        try {
+            $user = Auth::user();
+            if ($user->level != '1') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        return view('customer.join_lelang', [
+            'title' => 'List Lelang',
+            'is_active' => 'list_lelang',
+            'history_lelang' => $this->detail_lelang($request->id)->getData(),
+        ]);
+    }
+    
+    public function detail_lelang($id)
+    {
+        $detailLelang = DB::table('lelang')
+            ->where('id_lelang', $id)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $detailLelang,
+        ]);
+    }
 }
