@@ -41,6 +41,12 @@ Route::get('history_lelang_tengkulak', [TengkulakController::class, 'history_lel
 
 Route::get('join_lelang', [AuthController::class, 'join_lelang'])->name('join_lelang');
 
+
+// Customer Route
+Route::get('dashboard_customer', [CustomerController::class, 'dashboard'])->name('dashboard_customer');
+Route::get('list_lelang_customer', [CustomerController::class, 'list_lelang_customer'])->name('list_lelang_customer');
+Route::get('history_lelang_customer', [CustomerController::class, 'history_lelang_view'])->name('history_lelang_customer');
+
 // end test route
 
 Route::group(['middleware' => ['auth']], function () {

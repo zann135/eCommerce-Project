@@ -39,7 +39,6 @@ class TengkulakController extends Controller
         ->sum('harga_akhir');
 
         return (int) $totalPenjualan;
-            return 120000;
     }
     public function belum_dibayar()
     {

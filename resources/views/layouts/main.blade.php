@@ -104,19 +104,19 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('dashboard_tengkulak') }}">
+              <a class="nav-link" href="{{ route('dashboard_customer') }}">
                 <i class="menu-icon mdi mdi-grid-large"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('list_lelang') }}">
+              <a class="nav-link" href="{{ route('list_lelang_customer') }}">
                 <i class="menu-icon mdi mdi-gavel"></i>
                 <span class="menu-title">Lelang</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('history_lelang_tengkulak') }}">
+              <a class="nav-link" href="{{ route('history_lelang_customer') }}">
                 <i class="menu-icon mdi mdi-history"></i>
                 <span class="menu-title">History Lelang</span>
               </a>
