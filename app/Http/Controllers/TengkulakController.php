@@ -111,7 +111,7 @@ class TengkulakController extends Controller
         } catch (\Throwable $th) {
             return redirect()->intended('/');
         }
-        return view('customer/lelang', [
+        return view('tengkulak/lelang', [
             'title' => 'List Lelang',
             'is_active' => 'list_lelang',
             'list_lelang_tersedia' => $this->get_list_lelang()->getData(),
@@ -146,7 +146,7 @@ class TengkulakController extends Controller
         } catch (\Throwable $th) {
             return redirect()->intended('/');
         }
-        return view('customer/history', [
+        return view('tengkulak/history', [
             'title' => 'List Lelang',
             'is_active' => 'list_lelang',
             'history_lelang' => $this->history_lelang()->getData(),
