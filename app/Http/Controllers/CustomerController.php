@@ -33,12 +33,12 @@ class CustomerController extends Controller
         ]);
     }
     public function pembelian()
-    {   
+    {
         $id_customer = Auth::user()->id;
         $totalPenjualan = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->where('status_lelang', 3)
-        ->sum('harga_akhir');
+            ->where('id_customer', $id_customer)
+            ->where('status_lelang', 3)
+            ->sum('harga_akhir');
 
         return (int) $totalPenjualan;
     }
@@ -47,9 +47,9 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $totalBelumDibayar = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->where('status_lelang', 2)
-        ->sum('harga_akhir');
+            ->where('id_customer', $id_customer)
+            ->where('status_lelang', 2)
+            ->sum('harga_akhir');
 
         return (int) $totalBelumDibayar;
     }
@@ -58,9 +58,9 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $totalLelangBerhasil = DB::table('lelang')
-        ->where('id_tengkulak', $id_customer)
-        ->where('status_lelang', 3)
-        ->count();
+            ->where('id_tengkulak', $id_customer)
+            ->where('status_lelang', 3)
+            ->count();
 
         return (int) $totalLelangBerhasil;
     }
@@ -68,8 +68,8 @@ class CustomerController extends Controller
     public function kalah_lelang()
     {
         $totalLelang = DB::table('lelang')
-        ->where('status_lelang', 3)
-        ->count();
+            ->where('status_lelang', 3)
+            ->count();
 
         return (int) ($totalLelang - $this->menang_lelang());
     }
@@ -79,15 +79,14 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $historyLelang = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->get();
+            ->where('id_customer', $id_customer)
+            ->get();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data berhasil diambil',
             'data' => $historyLelang,
         ]);
-
     }
 
     // list table history menang lelang
@@ -95,9 +94,9 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $historyPemenangLelang = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->where('status_lelang', 3)
-        ->get();
+            ->where('id_customer', $id_customer)
+            ->where('status_lelang', 3)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -106,7 +105,8 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function list_lelang_customer(){
+    public function list_lelang_customer()
+    {
         try {
             $user = Auth::user();
             if ($user->level != '2') {
@@ -126,12 +126,12 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $listLelang = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->where('status_lelang', 0)
-        ->orWhere('status_lelang', 1)
-        ->orderBy('status_lelang', 'asc')
-        ->orderBy('tanggal_mulai', 'asc')
-        ->get();
+            ->where('id_customer', $id_customer)
+            ->where('status_lelang', 0)
+            ->orWhere('status_lelang', 1)
+            ->orderBy('status_lelang', 'asc')
+            ->orderBy('tanggal_mulai', 'asc')
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -140,7 +140,8 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function history_lelang_view(){
+    public function history_lelang_view()
+    {
         try {
             $user = Auth::user();
             if ($user->level != '2') {
@@ -163,11 +164,11 @@ class CustomerController extends Controller
         $id_customer = Auth::user()->id;
 
         $updateLelang = DB::table('lelang')
-        ->where('id_lelang', $id_lelang)
-        ->update([
-            'harga_akhir' => $harga_akhir,
-            'id_customer' => $id_customer,
-        ]);
+            ->where('id_lelang', $id_lelang)
+            ->update([
+                'harga_akhir' => $harga_akhir,
+                'id_customer' => $id_customer,
+            ]);
 
         if ($updateLelang) {
             return response()->json([
@@ -203,9 +204,9 @@ class CustomerController extends Controller
     {
         $id_customer = Auth::user()->id;
         $listLelang = DB::table('lelang')
-        ->where('id_customer', $id_customer)
-        ->where('status_lelang', 2)
-        ->get();
+            ->where('id_customer', $id_customer)
+            ->where('status_lelang', 2)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -218,7 +219,7 @@ class CustomerController extends Controller
     public function generate_invoice($id_lelang)
     {
         $lelang = DB::table('lelang')
-        ->where('id_lelang', $id_lelang)
-        ->first();
+            ->where('id_lelang', $id_lelang)
+            ->first();
     }
 }

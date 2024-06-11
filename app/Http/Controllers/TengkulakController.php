@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\lelang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -34,9 +35,9 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $totalPenjualan = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 3)
-        ->sum('harga_akhir');
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 3)
+            ->sum('harga_akhir');
 
         return (int) $totalPenjualan;
     }
@@ -44,9 +45,9 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $totalBelumDibayar = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 2)
-        ->sum('harga_akhir');
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 2)
+            ->sum('harga_akhir');
 
         return (int) $totalBelumDibayar;
     }
@@ -54,9 +55,9 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $totalLelangBerhasil = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 3)
-        ->count();
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 3)
+            ->count();
 
         return (int) $totalLelangBerhasil;
     }
@@ -64,9 +65,9 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $totalCustomer = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 2)
-        ->count();
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 2)
+            ->count();
 
         return (int) $totalCustomer;
     }
@@ -74,8 +75,8 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $historyLelang = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->get();
+            ->where('id_tengkulak', $id_tengkulak)
+            ->get();
 
 
         return response()->json([
@@ -88,9 +89,9 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $historyPemenangLelang = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 3)
-        ->get();
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 3)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -110,6 +111,7 @@ class TengkulakController extends Controller
         } catch (\Throwable $th) {
             return redirect()->intended('/');
         }
+        // dd(\Carbon\Carbon::now()->format('Y-m-d\TH:i'));
         return view('tengkulak/lelang', [
             'title' => 'List Lelang',
             'is_active' => 'list_lelang',
@@ -121,12 +123,12 @@ class TengkulakController extends Controller
     {
         $id_tengkulak = Auth::user()->id;
         $listLelang = DB::table('lelang')
-        ->where('id_tengkulak', $id_tengkulak)
-        ->where('status_lelang', 0)
-        ->orWhere('status_lelang', 1)
-        ->orderBy('status_lelang', 'asc')
-        ->orderBy('tanggal_mulai', 'asc')
-        ->get();
+            ->where('id_tengkulak', $id_tengkulak)
+            ->where('status_lelang', 0)
+            ->orWhere('status_lelang', 1)
+            ->orderBy('status_lelang', 'asc')
+            ->orderBy('tanggal_mulai', 'asc')
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -136,7 +138,8 @@ class TengkulakController extends Controller
     }
 
 
-    public function history_lelang_view(){
+    public function history_lelang_view()
+    {
         try {
             $user = Auth::user();
             if ($user->level != '1') {
@@ -152,7 +155,6 @@ class TengkulakController extends Controller
         ]);
     }
 
-
     public function tambah_lelang(Request $request)
     {
         $id_tengkulak = Auth::user()->id;
@@ -160,18 +162,20 @@ class TengkulakController extends Controller
         $waktu_mulai = $request->waktu_mulai;
         $waktu_selesai = $request->waktu_selesai;
         $harga_awal = $request->harga_awal;
-        $deskripsi = $request->deskripsi;
+        $kelipatan_bid = $request->kelipatan_bid;
+        $nama_cabai = $request->nama_cabai;
+        $total_cabai = $request->total_cabai;
 
         $tambahLelang = DB::table('lelang')->insert([
             'id_tengkulak' => $id_tengkulak,
             'nama_lelang' => $nama_lelang,
-            'waktu_mulai' => $waktu_mulai,
-            'waktu_selesai' => $waktu_selesai,
-            'harga_awal' => $harga_awal,
-            'deskripsi' => $deskripsi,
-            'status_lelang' => 0,
-            'tanggal_mulai' => date('Y-m-d H:i:s'),
-            'tanggal_selesai' => date('Y-m-d H:i:s'),
+            'tanggal_mulai' => $waktu_mulai,
+            'tanggal_selesai' => $waktu_selesai,
+            'open_bid' => $harga_awal,
+            'kelipatan_bid' => $kelipatan_bid,
+            'nama_cabai' => $nama_cabai,
+            'total_cabai' => $total_cabai,
+            'status_lelang' => 0
         ]);
 
         if ($tambahLelang) {
@@ -181,13 +185,28 @@ class TengkulakController extends Controller
         }
     }
 
-    public function edit_lelang($id_lelang)
+    // public function edit_lelang($id_lelang)
+    // {
+    //     $lelang = DB::table('lelang')->where('id_lelang', $id_lelang)->first();
+    //     return view('tengkulak/edit_lelang', [
+    //         'title' => 'Edit Lelang',
+    //         'is_active' => 'list_lelang',
+    //         'lelang' => $lelang,
+    //     ]);
+    // }
+    public function edit_lelang(lelang $lelang)
     {
-        $lelang = DB::table('lelang')->where('id_lelang', $id_lelang)->first();
-        return view('tengkulak/edit_lelang', [
-            'title' => 'Edit Lelang',
-            'is_active' => 'list_lelang',
-            'lelang' => $lelang,
-        ]);
+        // return view('tengkulak.edit_lelang');
+        dd('Behasil masuk', $lelang);
+    }
+
+    public function destroy(lelang $lelang)
+    {
+        dd('Behasil masuk', $lelang);
+    }
+
+    public function join_lelang()
+    {
+        return view('tengkulak.join_lelang');
     }
 }
