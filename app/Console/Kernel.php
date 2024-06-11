@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // Menjalankan setiap menit sebagai contoh
         $schedule->command('lelang:update-status')->everyMinute();
+        $schedule->command('app:update-status-on-progress')->everyMinute();
     }
 
     /**

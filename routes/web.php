@@ -37,7 +37,8 @@ Route::get('list_lelang_tengkulak', [TengkulakController::class, 'list_lelang'])
 Route::post('tambah_lelang', [TengkulakController::class, 'tambah_lelang'])->name('tambah_lelang');
 Route::get('list_lelang_tengkulak/{lelang:id_lelang}/edit', [TengkulakController::class, 'edit_lelang'])->name('edit_lelang');
 Route::get('history_lelang_tengkulak', [TengkulakController::class, 'history_lelang_view'])->name('history_lelang_tengkulak');
-Route::get('join_lelang', [TengkulakController::class, 'join_lelang'])->name('join_lelang');
+Route::get('join_lelang/{lelang:id_lelang}/', [TengkulakController::class, 'join_lelang'])->name('join_lelang');
+
 
 
 // Customer Route
