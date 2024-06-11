@@ -156,13 +156,69 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function payment()
+    public function update_lelang(Request $request)
     {
-        return view('payment');
+        $id_lelang = $request->id_lelang;
+        $harga_akhir = $request->harga_akhir;
+        $id_customer = Auth::user()->id;
+
+        $updateLelang = DB::table('lelang')
+        ->where('id_lelang', $id_lelang)
+        ->update([
+            'harga_akhir' => $harga_akhir,
+            'id_customer' => $id_customer,
+        ]);
+
+        if ($updateLelang) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil diupdate',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Data gagal diupdate',
+            ]);
+        }
     }
 
-    public function invoice()
+    public function payment()
     {
-        return view('invoice');
+        try {
+            $user = Auth::user();
+            if ($user->level != '2') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        return view('customer/payment', [
+            'title' => 'List Lelang',
+            'is_active' => 'list_lelang',
+            'history_lelang' => $this->get_active_payment()->getData(),
+        ]);
+    }
+
+    public function get_active_payment()
+    {
+        $id_customer = Auth::user()->id;
+        $listLelang = DB::table('lelang')
+        ->where('id_customer', $id_customer)
+        ->where('status_lelang', 2)
+        ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $listLelang,
+        ]);
+    }
+
+    #generate manual pdf invoice
+    public function generate_invoice($id_lelang)
+    {
+        $lelang = DB::table('lelang')
+        ->where('id_lelang', $id_lelang)
+        ->first();
     }
 }

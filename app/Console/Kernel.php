@@ -10,9 +10,10 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Menjalankan setiap menit sebagai contoh
+        $schedule->command('lelang:update-status')->everyMinute();
     }
 
     /**
