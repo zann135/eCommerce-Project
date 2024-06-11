@@ -36,17 +36,17 @@
                   @foreach ($list_lelang_tersedia->data as $item)
                     @php
                       $now = \Carbon\Carbon::now();
-                      $waktu_mulai = \Carbon\Carbon::parse($item->waktu_mulai);
-                      $waktu_berakhir = \Carbon\Carbon::parse($item->waktu_berakhir);
+                      $tanggal_mulai = \Carbon\Carbon::parse($item->tanggal_mulai);
+                      $tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai);
 
-                      if ($waktu_mulai < $now AND $waktu_berakhir > $now) {
+                      if ($tanggal_mulai < $now AND $tanggal_selesai > $now) {
                         $status = '<label class="badge badge-warning">Sedang Berlangsung</label>';
                         $button = "<div class='w-75 d-flex justify-content-center'>
                                     <a href='join_lelang' class='btn btn-primary'>Join</a>
                                   </div>";
                         $iteration1 += 1;
                       } else {
-                        if ($waktu_mulai > $now) {
+                        if ($tanggal_mulai > $now) {
                           $status = '<label class="badge badge-danger">Belum Dimulai</label>';
                           $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Join</a></div>';
                           $iteration1 += 1;
@@ -58,8 +58,8 @@
                   <tr>
                     <td class="text-center">{{ $iteration1 }}</td>
                     <td>{{ $item->nama_lelang }}</td>
-                    <td class="text-center">{{ $item->waktu_mulai }}</td>
-                    <td class="text-center">{{ $item->waktu_berakhir }}</td>
+                    <td class="text-center">{{ $item->tanggal_mulai }}</td>
+                    <td class="text-center">{{ $item->tanggal_selesai }}</td>
                     <td class="text-center">
                       {!! $status !!}
                     </td>
@@ -102,15 +102,15 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="waktu_mulai" class="col-sm-4 col-form-label">Waktu Mulai Lelang</label>
+              <label for="tanggal_mulai" class="col-sm-4 col-form-label">Waktu Mulai Lelang</label>
               <div class="col-sm-8">
-                <input type="time" class="form-control" id="waktu_mulai" placeholder="Waktu Mulai Lelang">
+                <input type="time" class="form-control" id="tanggal_mulai" placeholder="Waktu Mulai Lelang">
               </div>
             </div>
             <div class="form-group row">
-              <label for="waktu_berakhir" class="col-sm-4 col-form-label">Waktu Selesai Lelang</label>
+              <label for="tanggal_selesai" class="col-sm-4 col-form-label">Waktu Selesai Lelang</label>
               <div class="col-sm-8">
-                <input type="time" class="form-control" id="waktu_berakhir" placeholder="Waktu Selesai Lelang">
+                <input type="time" class="form-control" id="tanggal_selesai" placeholder="Waktu Selesai Lelang">
               </div>
             </div>
           </div>
