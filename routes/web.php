@@ -39,8 +39,6 @@ Route::get('list_lelang_tengkulak/{lelang:id_lelang}/edit', [TengkulakController
 Route::delete('delete_lelang', [TengkulakController::class, 'delete_lelang'])->name('delete_lelang');
 Route::get('history_lelang_tengkulak', [TengkulakController::class, 'history_lelang_view'])->name('history_lelang_tengkulak');
 
-Route::get('join_lelang', [AuthController::class, 'join_lelang'])->name('join_lelang');
-
 
 // Customer Route
 Route::get('dashboard_customer', [CustomerController::class, 'dashboard'])->name('dashboard_customer');

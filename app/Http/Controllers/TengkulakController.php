@@ -151,4 +151,43 @@ class TengkulakController extends Controller
             'history_lelang' => $this->history_lelang()->getData(),
         ]);
     }
+
+
+    public function tambah_lelang(Request $request)
+    {
+        $id_tengkulak = Auth::user()->id;
+        $nama_lelang = $request->nama_lelang;
+        $waktu_mulai = $request->waktu_mulai;
+        $waktu_selesai = $request->waktu_selesai;
+        $harga_awal = $request->harga_awal;
+        $deskripsi = $request->deskripsi;
+
+        $tambahLelang = DB::table('lelang')->insert([
+            'id_tengkulak' => $id_tengkulak,
+            'nama_lelang' => $nama_lelang,
+            'waktu_mulai' => $waktu_mulai,
+            'waktu_selesai' => $waktu_selesai,
+            'harga_awal' => $harga_awal,
+            'deskripsi' => $deskripsi,
+            'status_lelang' => 0,
+            'tanggal_mulai' => date('Y-m-d H:i:s'),
+            'tanggal_selesai' => date('Y-m-d H:i:s'),
+        ]);
+
+        if ($tambahLelang) {
+            return redirect()->back()->with('success', 'Lelang berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', 'Lelang gagal ditambahkan');
+        }
+    }
+
+    public function edit_lelang($id_lelang)
+    {
+        $lelang = DB::table('lelang')->where('id_lelang', $id_lelang)->first();
+        return view('tengkulak/edit_lelang', [
+            'title' => 'Edit Lelang',
+            'is_active' => 'list_lelang',
+            'lelang' => $lelang,
+        ]);
+    }
 }
