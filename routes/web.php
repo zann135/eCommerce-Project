@@ -34,8 +34,7 @@ Route::post('proses_register', [AuthController::class, 'proses_register'])->name
 // Tengkulak Route
 Route::get('dashboard_tengkulak', [TengkulakController::class, 'dashboard'])->name('dashboard_tengkulak');
 Route::get('list_lelang', [TengkulakController::class, 'list_lelang'])->name('list_lelang');
-Route::get('lelang', [AuthController::class, 'lelang'])->name('lelang');
-Route::get('history', [AuthController::class, 'history'])->name('history');
+Route::get('history_lelang_tengkulak', [TengkulakController::class, 'history_lelang_view'])->name('history_lelang_tengkulak');
 
 Route::get('join_lelang', [AuthController::class, 'join_lelang'])->name('join_lelang');
 

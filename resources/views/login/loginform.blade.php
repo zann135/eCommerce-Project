@@ -7,6 +7,12 @@
         <div class="content-wrapper d-flex align-items-center auth px-0">
           <div class="row w-100 mx-0">
             <div class="col-lg-4 mx-auto">
+              @if ($errors->has('login_gagal'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ $errors->first('login_gagal') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              @endif
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div class="brand-logo">
                   <img src="{{ asset('images/logo-cabein.svg') }}" alt="logo" class="w-25">

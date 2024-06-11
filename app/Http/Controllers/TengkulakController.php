@@ -18,10 +18,10 @@ class TengkulakController extends Controller
         } catch (\Throwable $th) {
             return redirect()->intended('/');
         }
-        var_dump($this->history_lelang()->getData());
-        return view('dashboard', [
+        return view('tengkulak.dashboard', [
             'title' => 'Dashboard',
             'is_active' => 'dashboard',
+            'user' => $user,
             'pembelian' => $this->penjualan(),
             'belum_bayar' => $this->belum_dibayar(),
             'menang_lelang' => $this->lelang_berhasil(),
@@ -111,7 +111,7 @@ class TengkulakController extends Controller
         } catch (\Throwable $th) {
             return redirect()->intended('/');
         }
-        return view('lelang', [
+        return view('customer/lelang', [
             'title' => 'List Lelang',
             'is_active' => 'list_lelang',
             'list_lelang_tersedia' => $this->get_list_lelang()->getData(),
@@ -133,6 +133,23 @@ class TengkulakController extends Controller
             'status' => 'success',
             'message' => 'Data berhasil diambil',
             'data' => $listLelang,
+        ]);
+    }
+
+
+    public function history_lelang_view(){
+        try {
+            $user = Auth::user();
+            if ($user->level != '1') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        return view('customer/history', [
+            'title' => 'List Lelang',
+            'is_active' => 'list_lelang',
+            'history_lelang' => $this->history_lelang()->getData(),
         ]);
     }
 }

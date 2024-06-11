@@ -1,3 +1,7 @@
+@php
+    $name = Auth::user()->name;
+    $email = Auth::user()->email;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,8 +60,8 @@
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
                   <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image">
-                  <p class="mb-1 mt-3 fw-semibold">Allen Moreno</p>
-                  <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                  <p class="mb-1 mt-3 fw-semibold">{{ $name }}</p>
+                  <p class="fw-light text-muted mb-0">{{ $email }}</p>
                 </div>
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
@@ -81,13 +85,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('lelang') }}">
+              <a class="nav-link" href="{{ route('list_lelang') }}">
                 <i class="menu-icon mdi mdi-gavel"></i>
                 <span class="menu-title">Lelang</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('history') }}">
+              <a class="nav-link" href="{{ route('history_lelang_tengkulak') }}">
                 <i class="menu-icon mdi mdi-history"></i>
                 <span class="menu-title">History Lelang</span>
               </a>

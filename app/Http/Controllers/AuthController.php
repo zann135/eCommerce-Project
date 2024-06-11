@@ -15,7 +15,7 @@ class AuthController extends Controller
         $user = Auth::user();
         if ($user) {
             if ($user->level == '1') {
-                return redirect()->intended('tengkulak');
+                return redirect()->intended('dashboard_tengkulak');
             } else if ($user->level == '2') {
                 return redirect()->intended('customer');
             }
