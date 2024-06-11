@@ -19,7 +19,7 @@ class UpdateLelangStatus extends Command
     {
         $listLelang = DB::table('lelang')
             ->where('status_lelang', 1)
-            ->where('tanggal_berakhir', '<=', now())
+            ->where('tanggal_berakhir', '<', now())
             ->get();
 
         foreach ($listLelang as $lelang) {
