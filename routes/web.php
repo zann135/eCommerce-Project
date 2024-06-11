@@ -35,7 +35,7 @@ Route::post('proses_register', [AuthController::class, 'proses_register'])->name
 Route::get('dashboard_tengkulak', [TengkulakController::class, 'dashboard'])->name('dashboard_tengkulak');
 Route::get('list_lelang_tengkulak', [TengkulakController::class, 'list_lelang'])->name('list_lelang_tengkulak');
 Route::post('tambah_lelang', [TengkulakController::class, 'tambah_lelang'])->name('tambah_lelang');
-Route::put('edit_lelang', [TengkulakController::class, 'edit_lelang'])->name('edit_lelang');
+Route::get('list_lelang_tengkulak/{lelang:id_lelang}/edit', [TengkulakController::class, 'edit_lelang'])->name('edit_lelang');
 Route::delete('delete_lelang', [TengkulakController::class, 'delete_lelang'])->name('delete_lelang');
 Route::get('history_lelang_tengkulak', [TengkulakController::class, 'history_lelang_view'])->name('history_lelang_tengkulak');
 

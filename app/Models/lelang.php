@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class lelang extends Model
 {
     use HasFactory;
+    protected $table = 'lelang';
     protected $fillable = [
         'id_lelang',
         'nama_lelang',
