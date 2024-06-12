@@ -55,21 +55,32 @@
                       <th>Harga Awal</th>
                       <th>Harga Akhir</th>
                       <th>Status</th>
-                      <th>Tanggal</th>
+                      <th>Tanggal Mulai</th>
+                      <th>Tanggal Selesai</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($history_lelang->data as $item)
                     <tr>
-                      <td>{{ $item->id_lelang }}</td>
+                      <td>{{ $loop->iteration }}</td>
                       <td class="harga">Rp{{ $item->open_bid }}</td>
-                      <td class="harga">Rp{{ $item->harga_akhir }}</td>
-                      @if ($item->status_lelang == 'Menang')
-                      <td><label class="badge badge-success">{{ $item->status_lelang }}</label></td>
+                      @if ($item->harga_akhir == null)
+                      <td>-</td>
                       @else
-                      <td><label class="badge badge-danger">{{ $item->status_lelang }}</label></td>
+                      <td class="harga">Rp{{ $item->harga_akhir }}</td>
+                      @endif
+
+                      @if ($item->status_lelang == 0)
+                      <td><label class="badge badge-danger">Belum Dimulai</label></td>
+                      @elseif ($item->status_lelang == 1)
+                      <td><label class="badge badge-warning">Sedang Berlangsung</label></td>
+                      @elseif ($item->status_lelang == 2)
+                      <td><label class="badge badge-danger">Belum Bayar</label></td>
+                      @else
+                      <td><label class="badge badge-success">Sudah Bayar</label></td>
                       @endif
                       <td>{{ $item->tanggal_mulai }}</td>
+                      <td>{{ $item->tanggal_selesai }}</td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -99,7 +110,7 @@
                   <tbody>
                     @foreach ($history_menang_lelang->data as $item)
                     <tr>
-                      <td>{{ $item->id_lelang }}</td>
+                      <td>{{ $loop->iteration }}</td>
                       <td>{{ $item->nama_cabai }}</td>
                       <td class="harga">Rp{{ $item->harga_awal }}</td>
                       <td class="harga">Rp{{ $item->harga_akhir }}</td>

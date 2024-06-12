@@ -1,8 +1,3 @@
-@php
-    $iteration1 = 0;
-    $iteration2 = 0;
-@endphp
-
 @extends('layouts.main')
 
 @section('content')
@@ -35,28 +30,25 @@
                 <tbody>
                   @foreach ($list_lelang_tersedia->data as $item)
                     @php
-                      $now = \Carbon\Carbon::now();
-                      $tanggal_mulai = \Carbon\Carbon::parse($item->tanggal_mulai);
-                      $tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai);
 
-                      if ($tanggal_mulai < $now AND $tanggal_selesai > $now) {
+                      if ($item->status_lelang == 0) {
+                        $status = '<label class="badge badge-danger">Belum Dimulai</label>';
+                        $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Join</a></div>';
+                      } else if ($item->status_lelang == 1) {
                         $status = '<label class="badge badge-warning">Sedang Berlangsung</label>';
-                        $button = "<div class='w-75 d-flex justify-content-center'>
-                                    <a href='join_lelang' class='btn btn-primary'>Join</a>
-                                  </div>";
-                        $iteration1 += 1;
+                        $button = '<div class="w-75 d-flex justify-content-center">
+                                    <a href="join_lelang/'.$item->id_lelang.'" class="btn btn-primary">Join</a>
+                                  </div>';
+                      } else if ($item->status_lelang == 2) {
+                        $status = '<label class="badge badge-danger">Belum Bayar</label>';
+                        $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Expired</a></div>';
                       } else {
-                        if ($tanggal_mulai > $now) {
-                          $status = '<label class="badge badge-danger">Belum Dimulai</label>';
-                          $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Join</a></div>';
-                          $iteration1 += 1;
-                        } else {
-                          continue;
-                        }
+                        $status = '<label class="badge badge-success">Sudah Bayar</label>';
+                        $button = '<div class="w-75 d-flex justify-content-center"><a href="" class="btn btn-light disabled">Expired</a></div>';
                       }
                     @endphp
                   <tr>
-                    <td class="text-center">{{ $iteration1 }}</td>
+                    <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $item->nama_lelang }}</td>
                     <td class="text-center">{{ $item->tanggal_mulai }}</td>
                     <td class="text-center">{{ $item->tanggal_selesai }}</td>

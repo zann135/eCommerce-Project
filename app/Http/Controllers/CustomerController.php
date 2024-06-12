@@ -32,6 +32,37 @@ class CustomerController extends Controller
             'history_menang_lelang' => $this->history_menang_lelang()->getData(),
         ]);
     }
+
+    public function join_lelang($id)
+    {
+        try {
+            $user = Auth::user();
+            if ($user->level != '2') {
+                return redirect()->intended('/');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->intended('/');
+        }
+        return view('customer.joinLelang', [
+            'title' => 'List Lelang',
+            'is_active' => 'list_lelang',
+            'history_lelang' => $this->detail_lelang((int)$id)->getData(),
+        ]);
+    }
+
+    public function detail_lelang($id)
+    {
+        $detailLelang = DB::table('lelang')
+            ->where('id_lelang', $id)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $detailLelang,
+        ]);
+    }
+
     public function pembelian()
     {
         $id_customer = Auth::user()->id;
@@ -127,9 +158,7 @@ class CustomerController extends Controller
         $id_customer = Auth::user()->id;
         $listLelang = DB::table('lelang')
             ->where('id_customer', $id_customer)
-            ->where('status_lelang', 0)
-            ->orWhere('status_lelang', 1)
-            ->orderBy('status_lelang', 'asc')
+            ->orderByRaw("FIELD(status_lelang, 1, 0, 2, 3)")
             ->orderBy('tanggal_mulai', 'asc')
             ->get();
 

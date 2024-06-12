@@ -196,8 +196,12 @@ class TengkulakController extends Controller
     // }
     public function edit_lelang(lelang $lelang)
     {
-        // return view('tengkulak.edit_lelang');
-        dd('Behasil masuk', $lelang);
+        $data = lelang::find($lelang->id_lelang);
+        return response()->json($lelang);
+    }
+
+    public function getLelang($id)
+    {
     }
 
     public function destroy(lelang $lelang)
@@ -205,7 +209,7 @@ class TengkulakController extends Controller
         dd('Behasil masuk', $lelang);
     }
 
-    public function join_lelang($request)
+    public function join_lelang($id)
     {
         try {
             $user = Auth::user();
@@ -218,10 +222,10 @@ class TengkulakController extends Controller
         return view('tengkulak.joinLelang', [
             'title' => 'List Lelang',
             'is_active' => 'list_lelang',
-            'history_lelang' => $this->detail_lelang($request->id_lelang)->getData(),
+            'history_lelang' => $this->detail_lelang((int)$id)->getData(),
         ]);
     }
-    
+
     public function detail_lelang($id)
     {
         $detailLelang = DB::table('lelang')

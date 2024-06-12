@@ -45,6 +45,7 @@ Route::get('join_lelang/{lelang:id_lelang}/', [TengkulakController::class, 'join
 Route::get('dashboard_customer', [CustomerController::class, 'dashboard'])->name('dashboard_customer');
 Route::get('list_lelang_customer', [CustomerController::class, 'list_lelang_customer'])->name('list_lelang_customer');
 Route::get('history_lelang_customer', [CustomerController::class, 'history_lelang_view'])->name('history_lelang_customer');
+Route::get('join_lelang/{lelang:id_lelang}/', [CustomerController::class, 'join_lelang'])->name('join_lelang');
 
 // end test route
 

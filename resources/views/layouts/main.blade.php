@@ -64,7 +64,6 @@
                   <p class="mb-1 mt-3 fw-semibold">{{ $name }}</p>
                   <p class="fw-light text-muted mb-0">{{ $email }}</p>
                 </div>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
               </div>
             </li>

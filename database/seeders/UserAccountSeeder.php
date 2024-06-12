@@ -17,32 +17,32 @@ class UserAccountSeeder extends Seeder
         //
         $user = [
             [
-                'username'=>'admin',
-                'name'=>'AkunAdmin',
-                'email'=>'admin@gmail.com',
-                'phone'=>'08123456789',
-                'address'=>'Jl. Raya No. 1',
-                'level'=>'admin',
-                'password'=>Hash::make('123456')
+                'username' => 'admin',
+                'name' => 'AkunAdmin',
+                'email' => 'admin@gmail.com',
+                'phone' => '08123456789',
+                'address' => 'Jl. Raya No. 1',
+                'level' => 'admin',
+                'password' => Hash::make('123456')
             ],
-            
+
             [
-                'username'=>'user1',
-                'name'=>'AkunUser1',
-                'email'=>'user1@gmail.com',
-                'phone'=>'08123456789',
-                'address'=>'Jl. Raya No. 1',
-                'level'=>'user',
-                'password'=>Hash::make('123456')
+                'username' => 'user1',
+                'name' => 'AkunUser1',
+                'email' => 'user1@gmail.com',
+                'phone' => '08123456789',
+                'address' => 'Jl. Raya No. 1',
+                'level' => 'user',
+                'password' => Hash::make('123456')
             ],
             [
-                'username'=>'user2',
-                'name'=>'AkunUser2',
-                'email'=>'user2@gmail.com',
-                'phone'=>'08123456789',
-                'address'=>'Jl. Raya No. 1',
-                'level'=>'user',
-                'password'=>Hash::make('123456')
+                'username' => 'user2',
+                'name' => 'AkunUser2',
+                'email' => 'user2@gmail.com',
+                'phone' => '08123456789',
+                'address' => 'Jl. Raya No. 1',
+                'level' => 'user',
+                'password' => Hash::make('123456')
             ],
 
         ];
